@@ -14,17 +14,20 @@ app.get("/",(req,res)=>{
 })
 
 io.on("connection", socket => {
-    console.group("Nueva conexion");
-    console.log("conectados: ", io.engine.clientsCount);
-    console.log("Id:" ,socket.id);
-    console.groupEnd("Nueva conexion");
     
-    socket.on("disconnect", _socket => {
-        console.group("desconexion");
-        console.log("conectados: ", io.engine.clientsCount);
-        console.log("desconexion Id:" ,socket.id);
-        console.groupEnd("desconexion");
+    socket.emit("mensaje-bienvenida", "Bienvenido al servidor")
+
+    socket.on("message", (message) => {
+        console.log(`Mensaje from user: ${socket.id}`, message);
     })
+    
+   io.emit("mensaje-bienvenida", "Un usuario se ha conectado")
+    
+    socket.on("disconnect", () => {
+        console.log("Un usuario se ha desconectado")
+    })
+    
+    console.log("Un usuario se ha conectado")
     
 })
 
