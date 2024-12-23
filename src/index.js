@@ -1,6 +1,4 @@
-// process.env.DEBUG = "socket.io*"
-
-
+const { teacherConections, studentsConections } = require("./routes")
 const express = require("express")
 const path = require("path")
 const { createServer } = require("http")
@@ -17,23 +15,12 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "views/index.html"))
 })
 
-//middleware para determinar si esta autenticado o no
-io.use((socket, next) => {
-    const token = socket.handshake.auth.token
-    if (token == 'mock token') {
-        return next()
-    }
-    const err = new Error("authentication error")
-    err.data = { message: "authentication error" }
-    return next(err)
-})
+const teachers = io.of("teachers");
+const students = io.of("students");
 
-io.on("connection", (socket) => {
+teachers.on("connection", (socket) => teacherConections({ io: teachers, socket }))
+students.on("connection", (socket) => studentsConections({ io: students, socket }))
 
-    socket.on("is conected", console.log)
-    socket.on("disconnect", console.log)
-    socket.on("connect", console.log)
-})
 
 
 httpServer.listen(3000)

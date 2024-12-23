@@ -9,9 +9,20 @@
 </head>
 
 <body>
-    <h1>middleware </h1>
+
+    <h1> chat de <span id="name-space"> </span></h1>
+
+    <ul class="rooms" id="rooms-container"></ul>
+
+    <div class="buttons-container" id="buttons-container"> </div>
+
+    <div class="send-form ">
+        <input type="text" id="input-send-message" class="input " placeholder="Escribe tu mensaje">
+        <button type="button" id="button-send-message" class="btn btn--success"> enviar mensaje</button>
+    </div>
+
     <script src="/socket.io/socket.io.js"></script>
-    <script type="module" src="/js/index.js"></script>
+    <script  type="module" src="/js/index.js"></script>
 </body>
 
 </html>
