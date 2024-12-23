@@ -17,11 +17,10 @@ app.get("/", (req, res) => {
 
 
 io.on("connection", (socket) => {
-    console.log("A user connected")
-    socket.on("disconnect", () => {
-        console.log("A user disconnected")
-    })
 
+    socket.on("is conected", console.log)
+    socket.on("disconnect", console.log)
+    socket.on("connect", console.log)
 })
 
 
