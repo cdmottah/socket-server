@@ -6,7 +6,7 @@ const disconnectButton = document.getElementById("disconnect");
 
 
 sendButton.addEventListener("click", () => {
-    if (socket.connected) socket.emit("is conected", "is conected");
+    socket.volatile.emit("is conected", "is conected");
 })
 
 connectButton.addEventListener("click", () => {
