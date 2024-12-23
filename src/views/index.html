@@ -10,7 +10,14 @@
 
 <body>
 
-   <div id="circle"></div>
+    <ul class="rooms" id="rooms-container"></ul>
+
+    <div class="buttons-container" id="buttons-container"> </div>
+
+    <div class="send-form ">
+        <input type="text" id="input-send-message" class="input " placeholder="Escribe tu mensaje">
+        <button type="button" id="button-send-message" class="btn btn--success"> enviar mensaje</button>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/index.js"></script>

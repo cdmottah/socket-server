@@ -16,11 +16,21 @@ app.get("/", (req, res) => {
 
 io.on("connection", socket => {
 
-    socket.on("move circle", (data) => {
-        socket.broadcast.emit("move circle", data)
+    socket.connectedRoom = ""
+
+    socket.on("join room", room => {
+        socket.leave(socket.connectedRoom);
+        socket.join(room);
+        socket.connectedRoom = room;
     })
-   
+
+    socket.on("client send message", ({ message }) => {
+        const room = socket.connectedRoom
+        console.log("data: ", { message, room })
+        io.to(room).emit("server send message", { message, room })
+    })
 })
+
 
 
 httpServer.listen(3000)
