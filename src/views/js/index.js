@@ -1,6 +1,13 @@
-const socket = io();
+import { createButtonElement,createRoomElement, createMessageElement } from './elements.js';
+import { addButtonListener } from './listeners.js';
+
+const user = prompt("escribe tu usuario");
+const teachers = ['julio', 'nicolas', 'kevin', 'Dmytro'];
+const group = (teachers.includes(user)) ? 'teachers' : 'students';
+const socketNameSpace = io(`/${group}`);
 
 const roomQuantity = 3
+const nameSpaceElement = document.getElementById("name-space")
 const roomsContainer = document.getElementById("rooms-container")
 const buttonsContainer = document.getElementById("buttons-container")
 const inputsendMessage = document.getElementById("input-send-message");
@@ -8,96 +15,52 @@ const buttonSendMessage = document.getElementById("button-send-message");
 
 
 roomsContainer.style.gridTemplateColumns = `repeat(${roomQuantity}, 1fr)`;
-// botones de conexión
-const buttonElements = (() => {
-    const buttons = []
+
+(() => {
+    const [buttonElements, roomElements] = [[], []]
     for (let i = 1; i <= roomQuantity; i++) {
-        const button = document.createElement("button")
-        button.id = `button-room-${i}`
-        button.setAttribute("room", `room-${i}`)
-        button.classList.add("btn", "btn--secondary")
-        button.textContent = `Room ${i}`
-        buttons.push(button)
-    }
-    return buttons
-})()
 
-// add buttons to the DOM
-for (const button of buttonElements) { buttonsContainer.appendChild(button) }
+        // createing the buttons
+        const button = createButtonElement(i)
+        buttonsContainer.appendChild(button)
+        buttonElements.push(button);
 
-// createing the rooms
-const rooms = (() => {
-    const rooms = []
-    for (let i = 1; i <= roomQuantity; i++) {
-        const liElement = document.createElement("li")
-        liElement.id = `room-${i}`
-        liElement.setAttribute("title", `room ${i}`)
-        liElement.classList.add("rooms__element")
-        rooms.push(liElement)
+        // createing the rooms
+        const room = createRoomElement(i)
+        roomsContainer.appendChild(room)
+        roomElements.push(room)
     }
-    return rooms
+    for (let button of buttonElements) {
+        addButtonListener({ buttonElements, button, socket: socketNameSpace })
+    }
+    return { buttonElements, roomElements }
 })()
 
 
-// add listeners to the buttons
-const buttonListeners = (() => {
-    const listeners = []
-    for (const button of buttonElements) {
-        const listener = button.addEventListener("click", () => {
-            const room = button.getAttribute("room");
-            buttonElements.forEach(button => {
-                button.classList.remove("btn--success");
-                button.classList.add("btn--secondary");
-            });
-            button.classList.remove("btn--secondary");
-            button.classList.add("btn--success");
-            socket.emit("join room", room)
-        })
-        listeners.push(listener)
-    }
-    return listeners
-})()
 
-// add rooms to the DOM
-for (const room of rooms) { roomsContainer.appendChild(room) }
-
-
-const sendMessage = () => {
+// *********************** envio de mensajes ***********************
+const _sendMessage = (socket) => {
     const message = inputsendMessage.value;
     socket.emit("client send message", { message });
     inputsendMessage.value = "";
 };
 
-// send message on Enter key press
-inputsendMessage.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
 
-// send message listener
-buttonSendMessage.addEventListener("click", sendMessage)
+inputsendMessage.addEventListener("keydown", ({ key }) => (key === "Enter") ? _sendMessage(socketNameSpace) : null)
+buttonSendMessage.addEventListener("click", () => _sendMessage(socketNameSpace))
 
 
-socket.on("connect", () => {
+socketNameSpace.on("connect", () => {
+    console.log("conectado: ", socketNameSpace.id)
 
-    socket.on("server send message", ({ message, room }) => {
-        _createMessage(room, message)
+    nameSpaceElement.textContent = group;
+
+    socketNameSpace.on("server send message", ({ message, room }) => {
+        console.log({ message, room })
+        const listElement = document.getElementById(room);
+        const messageElement = createMessageElement(message);
+        listElement.appendChild(messageElement);
     })
 
 })
-
-function _createMessage(room, message) {
-    const messagesContainer = document.createElement("p");
-    const listElement = document.getElementById(room)
-    messagesContainer.textContent = message;
-    messagesContainer.classList.add("message")
-    listElement.appendChild(messagesContainer)
-    return messagesContainer
-}
-
-
-
-
-
 
