@@ -41,7 +41,7 @@ roomsContainer.style.gridTemplateColumns = `repeat(${roomQuantity}, 1fr)`;
 // *********************** envio de mensajes ***********************
 const _sendMessage = (socket) => {
     const message = inputsendMessage.value;
-    socket.emit("client send message", { message });
+    socket.emit("client send message", { message:`${user}: ${message}` });
     inputsendMessage.value = "";
 };
 
