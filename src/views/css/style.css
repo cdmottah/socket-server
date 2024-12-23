@@ -1,53 +1,3 @@
-.rooms {
-    display: grid;
-    height: 70dvh;
-    background-color: #f1f1f1;
-    padding: 0.5em;
-    margin: 0;
-    gap: 0.5em;
-}
-
-.rooms__element {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    padding: 20px;
-    gap: 5px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 100%;
-    box-sizing: border-box;
-    position: relative;
-    flex-grow: 1;
-    flex-shrink: 0;
-}
-.rooms__element::before{
-    content: attr(title);
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #007bff;
-}
-.rooms__element::after{
-    content: attr(title);
-    font-size: 0.9em;
-    font-weight: bold;
-    color: #ccc;
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-}
-
-.buttons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 10px;
-    margin-block: 20px;
-}
-
 .btn {
     padding: 10px 20px;
     border: none;
@@ -64,31 +14,4 @@
 .btn--success {
     background-color: #28a745;
     color: #fff;
-}
-
-.send-form {
-    display: flex;
-    --margin: 1em;
-    width: calc(100dvw - var(--margin) * 2);
-    margin-inline: var(--margin);
-    gap: 1em;
-    flex-wrap: wrap;
-    justify-content: end;
-}
-
-.input {
-    width: min(calc(100dvw - 2em), 300px);
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.message{
-    width: 100%;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 0;
-    font-size: 16px;
 }

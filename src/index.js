@@ -1,4 +1,4 @@
-const { teacherConections, studentsConections } = require("./routes")
+
 const express = require("express")
 const path = require("path")
 const { createServer } = require("http")
@@ -15,12 +15,14 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "views/index.html"))
 })
 
-const teachers = io.of("teachers");
-const students = io.of("students");
 
-teachers.on("connection", (socket) => teacherConections({ io: teachers, socket }))
-students.on("connection", (socket) => studentsConections({ io: students, socket }))
+io.on("connection", (socket) => {
+    console.log("A user connected")
+    socket.on("disconnect", () => {
+        console.log("A user disconnected")
+    })
 
+})
 
 
 httpServer.listen(3000)
