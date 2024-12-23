@@ -1,20 +1,17 @@
-const socket = io()
-
-const sendButton = document.getElementById("send");
-const connectButton = document.getElementById("connect");
-const disconnectButton = document.getElementById("disconnect");
-
-
-sendButton.addEventListener("click", () => {
-    socket.volatile.emit("is conected", "is conected");
+const socket = io({
+    auth: {
+        token: "mock "
+    }
 })
 
-connectButton.addEventListener("click", () => {
-    socket.connect()
-})
 
-disconnectButton.addEventListener("click", () => {
-    socket.disconnect()
+socket.on("connect_error", (err) => {
+
+    console.group('error');
+    console.error(err)
+    console.groupEnd('error');
+
+
 })
 
 socket.on("connect", () => {

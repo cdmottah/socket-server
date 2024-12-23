@@ -15,6 +15,16 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "views/index.html"))
 })
 
+//middleware para determinar si esta autenticado o no
+io.use((socket, next) => {
+    const token = socket.handshake.auth.token
+    if (token == 'mock token') {
+        return next()
+    }
+    const err = new Error("authentication error")
+    err.data = { message: "authentication error" }
+    return next(err)
+})
 
 io.on("connection", (socket) => {
 
