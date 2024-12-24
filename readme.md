@@ -122,7 +122,7 @@ This project serves as the **backend** for a chat application, developed as part
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/socket-server.git
+   git clone https://github.com/cdmottah/socket-server.git
    ```
 2. Navigate to the project directory:
    ```bash
