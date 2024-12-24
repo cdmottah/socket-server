@@ -1,3 +1,4 @@
+// process.env.DEBUG = "socket.io*"
 
 const express = require("express");
 const { createServer } = require("http");

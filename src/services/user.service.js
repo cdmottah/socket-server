@@ -3,7 +3,13 @@
 class UserService {
     constructor() {
         this.users = [
-            { name: 'cristian' }
+            { name: 'cristian' },
+            { name: 'julio' },
+            { name: 'luisa' },
+            { name: 'manuel' },
+            { name: 'alejo' },
+            { name: 'alison' },
+
         ]
     }
 
