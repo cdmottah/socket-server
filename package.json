@@ -10,7 +10,9 @@
   "author": "cristian Motta <cdmottah@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@hapi/boom": "^10.0.1",
     "@socket.io/admin-ui": "^0.5.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "socket.io": "^4.7.1",
     "socket.io-client": "^4.8.1"
